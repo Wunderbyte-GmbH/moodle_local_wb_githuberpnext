@@ -49,9 +49,9 @@ class task {
         $jsonobject = json_decode($data);
 
         $DB->insert_record('local_wb_githuberpnext_tasks', [
-            'identifier' => $jsonobject->issue->id,
-            'action' => $jsonobject->action,
-            'project' => $jsonobject->label->name,
+            'identifier' => $jsonobject->issue->id ?? 'not found',
+            'action' => $jsonobject->action ?? 'not found',
+            'project' => $jsonobject->label->name ?? 'not found',
             'json' => $data,
         ]);
     }
