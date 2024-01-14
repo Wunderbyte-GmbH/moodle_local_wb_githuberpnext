@@ -9,6 +9,8 @@
                 <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="true" COMMENT="Id"/>
                 <FIELD NAME="identifier" TYPE="char" LENGTH="255" NOTNULL="false" SEQUENCE="false"/>
                 <FIELD NAME="json" TYPE="text" NOTNULL="false" SEQUENCE="false"/>
+                <FIELD NAME="action" TYPE="char" LENGTH="255" NOTNULL="false" SEQUENCE="false"/>
+                <FIELD NAME="project" TYPE="char" LENGTH="255" NOTNULL="false" SEQUENCE="false" COMMENT="project"/>
             </FIELDS>
             <KEYS>
                 <KEY NAME="primary" TYPE="primary" FIELDS="id"/>

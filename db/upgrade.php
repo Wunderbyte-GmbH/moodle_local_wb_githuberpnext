@@ -36,10 +36,27 @@ function xmldb_local_wb_githuberpnext_upgrade($oldversion) {
 
     $dbman = $DB->get_manager();
 
-    // For further information please read {@link https://docs.moodle.org/dev/Upgrade_API}.
-    //
-    // You will also have to create the db/install.xml file by using the XMLDB Editor.
-    // Documentation for the XMLDB Editor can be found at {@link https://docs.moodle.org/dev/XMLDB_editor}.
+    if ($oldversion < 2024011400) {
+
+        // Define field action to be added to local_wb_githuberpnext_tasks.
+        $table = new xmldb_table('local_wb_githuberpnext_tasks');
+        $field = new xmldb_field('action', XMLDB_TYPE_CHAR, '255', null, null, null, null, 'json');
+
+        // Conditionally launch add field action.
+        if (!$dbman->field_exists($table, $field)) {
+            $dbman->add_field($table, $field);
+        }
+
+        $field = new xmldb_field('project', XMLDB_TYPE_CHAR, '255', null, null, null, null, 'action');
+
+        // Conditionally launch add field project.
+        if (!$dbman->field_exists($table, $field)) {
+            $dbman->add_field($table, $field);
+        }
+
+        // Wb_githuberpnext savepoint reached.
+        upgrade_plugin_savepoint(true, 2024011400, 'local', 'wb_githuberpnext');
+    }
 
     return true;
 }
