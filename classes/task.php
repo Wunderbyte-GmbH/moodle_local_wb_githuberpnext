@@ -25,6 +25,7 @@
 
 namespace local_wb_githuberpnext;
 
+use dml_exception;
 use stdClass;
 
 /**
@@ -36,11 +37,22 @@ use stdClass;
  */
 class task {
 
-    public static function create(stdClass $data) {
+    /**
+     * Create issue.
+     * @param string $data
+     * @return void
+     * @throws dml_exception
+     */
+    public static function create(string $data) {
         global $DB;
 
+        $jsonobject = json_decode($data);
+
         $DB->insert_record('local_wb_githuberpnext_tasks', [
-            'json' => json_encode(json_encode($data)),
+            'identifier' => $jsonobject->issue->id,
+            'action' => $jsonobject->action,
+            'project' => $jsonobject->label->name,
+            'json' => $data,
         ]);
     }
 }

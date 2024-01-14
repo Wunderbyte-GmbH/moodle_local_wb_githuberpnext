@@ -78,11 +78,7 @@ class add_task extends external_api {
 
         self::validate_context($context);
 
-        $data = (object)[
-            'payload' => $payload,
-        ];
-
-        task::create($data);
+        task::create($payload);
 
         return [];
     }
