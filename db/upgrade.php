@@ -36,7 +36,7 @@ function xmldb_local_wb_githuberpnext_upgrade($oldversion) {
 
     $dbman = $DB->get_manager();
 
-    if ($oldversion < 2024011400) {
+    if ($oldversion < 2024011402) {
 
         // Define field action to be added to local_wb_githuberpnext_tasks.
         $table = new xmldb_table('local_wb_githuberpnext_tasks');
@@ -54,8 +54,15 @@ function xmldb_local_wb_githuberpnext_upgrade($oldversion) {
             $dbman->add_field($table, $field);
         }
 
+        $field = new xmldb_field('status', XMLDB_TYPE_INTEGER, '2', null, null, null, null, 'project');
+
+        // Conditionally launch add field status.
+        if (!$dbman->field_exists($table, $field)) {
+            $dbman->add_field($table, $field);
+        }
+
         // Wb_githuberpnext savepoint reached.
-        upgrade_plugin_savepoint(true, 2024011400, 'local', 'wb_githuberpnext');
+        upgrade_plugin_savepoint(true, 2024011402, 'local', 'wb_githuberpnext');
     }
 
     return true;
