@@ -55,37 +55,21 @@ class add_task extends external_api {
      */
     public static function execute_parameters(): external_function_parameters {
         return new external_function_parameters([
-            'zen' => new external_value(PARAM_TEXT, 'Zen', VALUE_DEFAULT, ''),
-            'hook_id' => new external_value(PARAM_INT, 'Hook ID', VALUE_DEFAULT, 0),
-            'hook' => new external_value(PARAM_RAW, 'Hook', VALUE_DEFAULT, ''),
-            'repository' => new external_value(PARAM_RAW, 'Repository', VALUE_DEFAULT, ''),
-            'sender' => new external_value(PARAM_RAW, 'Sender', VALUE_DEFAULT, ''),
+            'payload' => new external_value(PARAM_RAW, 'Payload', VALUE_DEFAULT, ''),
         ]);
     }
 
 
     /**
-     * Webservice for shopping_cart class to add a new item to the cart.
+     * Webservice for wb_githuberpnext class to add a new task.
      *
-     * @param string $component
-     * @param string $area
-     * @param int $itemid
-     * @param int $userid
+     * @param string $payload
      *
      * @return array
      */
-    public static function execute(
-        string $zen,
-        int $hookid,
-        string $hook,
-        string $repository,
-        string $sender): array {
+    public static function execute(string $payload): array {
         $params = self::validate_parameters(self::execute_parameters(), [
-            'zen' => $zen,
-            'hook_id' => $hookid,
-            'hook' => $hook,
-            'repository' => $repository,
-            'sender' => $sender,
+            'payload' => $payload,
         ]);
 
         require_login();
@@ -95,11 +79,7 @@ class add_task extends external_api {
         self::validate_context($context);
 
         $data = (object)[
-            'zen' => $zen,
-            'hookid' => $hookid,
-            'hook' => $hook,
-            'repository' => $repository,
-            'sender' => $sender,
+            'payload' => $payload,
         ];
 
         task::create($data);
